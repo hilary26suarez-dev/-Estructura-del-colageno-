@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El Colágeno como Biomaterial · Visor interactivo</title>
+<meta name="description" content="Relación entre la estructura química del colágeno, su resistencia mecánica y su viabilidad de implementación clínica.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script src="https://3Dmol.org/build/3Dmol-min.js" defer></script>
+</head>
+<body>
+<div class="bg-glow" aria-hidden="true"><span></span><span></span><span></span></div>
+
+<!-- ============ NAV ============ -->
+<header class="topbar">
+  <a href="#inicio" class="brand">
+    <svg viewBox="0 0 40 40" class="brand-ico" aria-hidden="true">
+      <defs><linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset=".5" stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/></linearGradient></defs>
+      <path d="M8 4 C 32 12, 8 28, 32 36" stroke="url(#bg1)" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+      <path d="M32 4 C 8 12, 32 28, 8 36" stroke="url(#bg1)" stroke-width="3.2" fill="none" stroke-linecap="round" opacity=".7"/>
+      <path d="M20 2 C 36 16, 4 24, 20 38" stroke="#fde68a" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
+    </svg>
+    <span><b>Colágeno</b><small>Biomaterial natural</small></span>
+  </a>
+  <button class="menu-btn" aria-label="Abrir menú" aria-expanded="false">☰</button>
+  <nav class="nav">
+    <a href="#fundamentos">Fundamentos</a>
+    <a href="#quimica">Estructura química</a>
+    <a href="#visor">Visor 3D</a>
+    <a href="#jerarquia">Jerarquía</a>
+    <a href="#mecanica">Mecánica</a>
+    <a href="#aplicaciones">Aplicaciones</a>
+    <a href="#viabilidad">Viabilidad</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#referencias">Referencias</a>
+  </nav>
+</header>
+
+<main>
+<!-- ============ HERO ============ -->
+<section id="inicio" class="hero">
+  <div class="hero-text">
+    <p class="eyebrow">Química Orgánica · Trabajo final</p>
+    <h1>El <span class="grad">Colágeno</span><br>como Biomaterial</h1>
+    <p class="lead">Explora cómo su <b>estructura química</b> determina su <b>resistencia mecánica</b> y su <b>viabilidad de implementación clínica</b>.</p>
+    <div class="question">
+      <span class="q-ico">?</span>
+      <p>¿Qué características químicas del colágeno lo hacen útil —y a la vez limitado— como materia prima de andamios, apósitos y hemostáticos?</p>
+    </div>
+    <div class="cta">
+      <a href="#visor" class="btn primary">Abrir visor 3D</a>
+      <a href="#fundamentos" class="btn ghost">Empezar por la química</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <canvas id="heroHelix" aria-label="Animación de la triple hélice del colágeno"></canvas>
+    <div class="mol-badge b-gly" data-mol="GLY"><div class="mol-circle"></div><span>Glicina<small>Gly · G</small></span></div>
+    <div class="mol-badge b-pro" data-mol="PRO"><div class="mol-circle"></div><span>Prolina<small>Pro · P</small></span></div>
+    <div class="mol-badge b-hyp" data-mol="HYP"><div class="mol-circle"></div><span>Hidroxiprolina<small>Hyp · O</small></span></div>
+    <div class="hero-tag">Triple hélice · colágeno tipo I</div>
+  </div>
+  <div class="stats">
+    <div class="stat"><b data-count="28">0</b><span>tipos de colágeno descritos</span></div>
+    <div class="stat"><b>1 de 3</b><span>residuos es glicina</span></div>
+    <div class="stat"><b>300 × 1,5</b><span>nm: tamaño de una molécula</span></div>
+    <div class="stat"><b>≈ 30 %</b><span>de la proteína total en mamíferos</span></div>
+  </div>
+</section>
+
+<!-- ============ 1. FUNDAMENTOS ============ -->
+<section id="fundamentos" class="section">
+  <header class="sec-head reveal">
+    <span class="sec-num">01</span>
+    <div>
+      <h2>Fundamentos químicos de las proteínas</h2>
+      <p>Antes de entender la triple hélice hay que entender sus piezas: el aminoácido y el enlace que los une.</p>
+    </div>
+  </header>
+
+  <div class="grid-2">
+    <article class="card reveal">
+      <h3>Estructura general de un α-aminoácido</h3>
+      <div class="svg-wrap" id="svgAminoacid"></div>
+      <ul class="legend-list">
+        <li><i style="background:#60a5fa"></i><b>Grupo amino</b> (–NH₂): base; a pH 7 está como –NH₃⁺.</li>
+        <li><i style="background:#f87171"></i><b>Grupo carboxilo</b> (–COOH): ácido; a pH 7 está como –COO⁻.</li>
+        <li><i style="background:#34d399"></i><b>Cadena lateral R</b>: define la identidad (H en Gly).</li>
+        <li><i style="background:#fde68a"></i><b>Carbono α</b>: quiral en todos salvo la glicina (L en proteínas).</li>
+      </ul>
+    </article>
+
+    <article class="card reveal">
+      <h3>Formación del enlace peptídico (condensación)</h3>
+      <div class="reaction" id="svgPeptide"></div>
+      <p class="muted small">El –OH del carboxilo y un H del amino salen como H₂O. Se forma una <b>amida</b> (enlace C–N en rosa).</p>
+      <h4 class="mt">Resonancia: por qué el enlace es plano y rígido</h4>
+      <div class="reaction" id="svgResonance"></div>
+      <div class="chips">
+        <span class="chip">C–N ≈ 1,33 Å (entre simple 1,47 y doble 1,27)</span>
+        <span class="chip">≈ 40 % carácter de doble enlace</span>
+        <span class="chip">6 átomos coplanares</span>
+        <span class="chip">Conformación <i>trans</i> preferida</span>
+      </div>
+    </article>
+  </div>
+
+  <article class="card reveal levels">
+    <h3>Niveles de organización… aplicados al colágeno</h3>
+    <div class="level-row">
+      <div class="level"><span>1°</span><h4>Primaria</h4><p>Secuencia repetitiva <b class="mono">(Gly-X-Y)ₙ</b> con mucha Pro y Hyp.</p></div>
+      <div class="arrow">→</div>
+      <div class="level"><span>2°</span><h4>Secundaria</h4><p>Cada cadena α forma una <b>hélice de poliprolina II</b> levógira (no una α-hélice).</p></div>
+      <div class="arrow">→</div>
+      <div class="level"><span>3°</span><h4>Terciaria</h4><p>Molécula alargada y rígida: no se pliega en glóbulo.</p></div>
+      <div class="arrow">→</div>
+      <div class="level"><span>4°</span><h4>Cuaternaria</h4><p>Tres cadenas α se enrollan en una <b>superhélice dextrógira</b>: la triple hélice.</p></div>
+    </div>
+  </article>
+</section>
+
+<!-- ============ 2. QUÍMICA DEL COLÁGENO ============ -->
+<section id="quimica" class="section">
+  <header class="sec-head reveal">
+    <span class="sec-num">02</span>
+    <div>
+      <h2>Estructura química del colágeno</h2>
+      <p>Haz clic en cualquier residuo de la secuencia. Prueba a <b>mutar una glicina</b> y observa qué pasa en el centro de la hélice.</p>
+    </div>
+  </header>
+
+  <article class="card reveal">
+    <div class="seq-head">
+      <h3>Explorador de la secuencia Gly-X-Y</h3>
+      <div class="seq-legend">
+        <span><i class="dot gly"></i>Gly (posición 1)</span>
+        <span><i class="dot pro"></i>Pro (suele ir en X)</span>
+        <span><i class="dot hyp"></i>Hyp (suele ir en Y)</span>
+        <span><i class="dot oth"></i>Otros</span>
+      </div>
+    </div>
+    <div id="sequence" class="sequence" role="list"></div>
+    <p class="muted small">Secuencia ilustrativa del tipo α1(I). Las prolinas en posición Y se muestran ya hidroxiladas (Hyp), como ocurre tras la modificación postraduccional.</p>
+
+    <div class="seq-body">
+      <div class="res-info" id="resInfo"></div>
+      <div class="cross">
+        <div class="cross-head">
+          <h4>Corte transversal de la triple hélice</h4>
+          <button class="btn small danger" id="mutateBtn">Mutar Gly → Ala</button>
+        </div>
+        <div id="crossSection"></div>
+        <p class="muted small" id="crossNote">Cada Gly apunta al eje central. Su N–H forma un puente de hidrógeno con el C=O del residuo X de la cadena vecina.</p>
+      </div>
+    </div>
+  </article>
+
+  <div class="grid-2">
+    <article class="card reveal">
+      <h3>Hidroxilación de prolina: química postraduccional</h3>
+      <div class="reaction" id="svgHydrox"></div>
+      <div class="explain">
+        <p><b>Enzima:</b> prolil-4-hidroxilasa (en el retículo endoplásmico). Usa Fe²⁺, O₂ y α-cetoglutarato, que se descarboxila a succinato + CO₂.</p>
+        <p><b>Vitamina C (ascorbato):</b> devuelve el hierro a Fe²⁺ cuando queda oxidado. Sin ella hay poca Hyp, la hélice es inestable a 37 °C y aparece el <b>escorbuto</b>.</p>
+        <p><b>Estereoquímica:</b> se forma (2<i>S</i>,4<i>R</i>)-4-hidroxiprolina. El –OH electronegativo fija el anillo en pliegue <b>Cγ-exo</b> por efecto <i>gauche</i>. Eso preorganiza los ángulos φ/ψ y favorece el enlace peptídico <i>trans</i>: la hélice se estabiliza <b>sin depender de puentes de H con el agua</b> (Shoulders y Raines, 2009).</p>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <h3>Entrecruzamientos covalentes entre moléculas</h3>
+      <div class="flow">
+        <div class="flow-step"><span class="tag">Lys / Hyl</span><code>–CH₂–NH₃⁺</code><small>ε-amino de la cadena lateral</small></div>
+        <div class="flow-arrow"><span>lisil oxidasa<br>(Cu²⁺, O₂)</span></div>
+        <div class="flow-step"><span class="tag">Alisina</span><code>–CH=O</code><small>aldehído reactivo</small></div>
+        <div class="flow-arrow"><span>+ Lys/Hyl<br>vecina</span></div>
+        <div class="flow-step"><span class="tag">Base de Schiff</span><code>–CH=N–CH₂–</code><small>aldimina (entrecruzamiento inmaduro)</small></div>
+        <div class="flow-arrow"><span>maduración</span></div>
+        <div class="flow-step hl"><span class="tag">Piridinolina</span><code>anillo de piridinio</code><small>entrecruzamiento trivalente, estable</small></div>
+      </div>
+      <p class="muted small">Los entrecruzamientos se forman en los extremos no helicoidales (telopéptidos). Unen moléculas vecinas dentro de la fibrilla y son la base química de su resistencia a la tracción (Gelse et al., 2003).</p>
+
+      <h4 class="mt">Grupos funcionales e interacciones</h4>
+      <table class="tbl">
+        <thead><tr><th>Grupo</th><th>Dónde</th><th>Interacción</th></tr></thead>
+        <tbody>
+          <tr><td><span class="fg amide">Amida</span></td><td>Esqueleto (enlace peptídico)</td><td>Puente H N–H···O=C entre cadenas</td></tr>
+          <tr><td><span class="fg hydroxyl">Hidroxilo</span></td><td>Hyp, Hyl</td><td>Efecto estereoelectrónico; puentes de agua; glicosilación (Hyl)</td></tr>
+          <tr><td><span class="fg amino">Amino</span></td><td>Lys, Hyl, Arg</td><td>Iónica con COO⁻; sitio de entrecruzamiento</td></tr>
+          <tr><td><span class="fg carboxyl">Carboxilo</span></td><td>Asp, Glu</td><td>Puentes salinos entre moléculas → empaquetamiento</td></tr>
+        </tbody>
+      </table>
+    </article>
+  </div>
+</section>
+
+<!-- ============ 3. VISOR 3D ============ -->
+<section id="visor" class="section">
+  <header class="sec-head reveal">
+    <span class="sec-num">03</span>
+    <div>
+      <h2>Visor estructural interactivo <span class="pill">Anexo A · in silico</span></h2>
+      <p>Estructuras cristalográficas reales del Protein Data Bank. Arrastra para rotar, usa la rueda para acercar.</p>
+    </div>
+  </header>
+
+  <div class="viewer-layout reveal">
+    <div class="viewer-stage">
+      <div id="viewerWrap" class="viewer-wrap">
+        <div id="viewer3d" class="viewer3d"></div>
+        <div id="viewer3dB" class="viewer3d hidden"></div>
+      </div>
+      <div class="viewer-overlay" id="viewerStatus">Cargando estructura…</div>
+      <div class="viewer-caption" id="viewerCaption"></div>
+    </div>
+
+    <aside class="viewer-panel card">
+      <label class="lbl">Estructura (PDB)</label>
+      <div class="pdb-list" id="pdbList"></div>
+      <div class="pdb-custom">
+        <input id="pdbInput" maxlength="4" placeholder="Otro ID, ej. 1QSU" aria-label="ID de PDB">
+        <button class="btn small" id="pdbLoad">Cargar</button>
+      </div>
+
+      <label class="lbl">Representación</label>
+      <div class="seg" id="styleSeg">
+        <button data-style="ballstick" class="on">Bolas y barras</button>
+        <button data-style="sphere">Esferas</button>
+        <button data-style="stick">Barras</button>
+        <button data-style="trace">Esqueleto Cα</button>
+      </div>
+
+      <label class="lbl">Color</label>
+      <div class="seg" id="colorSeg">
+        <button data-color="residue" class="on">Por residuo</button>
+        <button data-color="chain">Por cadena</button>
+        <button data-color="element">Por elemento</button>
+      </div>
+
+      <div class="toggles">
+        <label class="tg"><input type="checkbox" id="tgHbond" checked><span></span>Puentes de H entre cadenas</label>
+        <label class="tg"><input type="checkbox" id="tgGly"><span></span>Resaltar solo Gly</label>
+        <label class="tg"><input type="checkbox" id="tgSpin" checked><span></span>Girar automáticamente</label>
+        <label class="tg"><input type="checkbox" id="tgCompare"><span></span>Comparar normal vs. Gly sustituida</label>
+      </div>
+
+      <div class="v-stats" id="vStats"></div>
+
+      <div class="v-legend">
+        <span><i class="dot gly"></i>Gly</span><span><i class="dot pro"></i>Pro</span><span><i class="dot hyp"></i>Hyp</span><span><i class="dot ala"></i>Ala (sustitución)</span><span><i class="dot oth"></i>Otros</span><span><i class="dash"></i>Puente H N···O</span>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 4. JERARQUÍA ============ -->
+<section id="jerarquia" class="section">
+  <header class="sec-head reveal">
+    <span class="sec-num">04</span>
+    <div>
+      <h2>Del enlace a la fibra: organización jerárquica</h2>
+      <p>La resistencia del colágeno no viene de un solo nivel. Viene de cómo cada nivel se apila sobre el anterior.</p>
+    </div>
+  </header>
+  <article class="card reveal">
+    <div class="h-steps" id="hSteps"></div>
+    <div class="h-body">
+      <div class="h-art" id="hArt"></div>
+      <div class="h-info" id="hInfo"></div>
+    </div>
+    <div class="scale-bar" id="scaleBar"></div>
+  </article>
+</section>
+
+<!-- ============ 5. MECÁNICA ============ -->
+<section id="mecanica" class="section">
+  <header class="sec-head reveal">
+    <span class="sec-num">05</span>
+    <div>
+      <h2>Simulador: química → resistencia mecánica</h2>
+      <p>Cambia la química y observa la estabilidad térmica y la curva esfuerzo–deformación. <b>Modelo didáctico cualitativo</b>, calibrado con rangos típicos de tendón.</p>
+    </div>
+  </header>
+
+  <div class="sim reveal">
+    <div class="card sim-controls">
+      <label class="lbl">Escenarios</label>
+      <div class="presets" id="presets"></div>
+
+      <div class="slider">
+        <div class="s-top"><span>Hidroxilación de Pro en posición Y</span><b id="vHyp"></b></div>
+        <input type="range" id="sHyp" min="0" max="100" value="45">
+      </div>
+      <div class="slider">
+        <div class="s-top"><span>Densidad de entrecruzamiento</span><b id="vXl"></b></div>
+        <input type="range" id="sXl" min="0" max="100" value="50">
+      </div>
+      <div class="slider">
+        <div class="s-top"><span>Sustituciones de Gly (tipo OI)</span><b id="vSub"></b></div>
+        <input type="range" id="sSub" min="0" max="3" value="0" step="1">
+      </div>
+      <div class="slider">
+        <div class="s-top"><span>Temperatura</span><b id="vT"></b></div>
+        <input type="range" id="sT" min="20" max="70" value="37">
+      </div>
+      <label class="lbl">Agente entrecruzante</label>
+      <select id="sAgent">
+        <option value="natural">Natural (lisil oxidasa)</option>
+        <option value="dht">Físico: deshidrotérmico (DHT)</option>
+        <option value="ga">Glutaraldehído</option>
+        <option value="gen">Genipina</option>
+        <option value="edc">EDC/NHS</option>
+      </select>
+    </div>
+
+    <div class="card sim-out">
+      <div class="sim-top">
+        <canvas id="simHelix" aria-label="Estado de la triple hélice"></canvas>
+        <div class="gauges" id="gauges"></div>
+      </div>
+      <div id="ssChart" class="chart"></div>
+      <p class="sim-msg" id="simMsg"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. APLICACIONES ============ -->
+<section id="aplicaciones" class="section">
+  <header class="sec-head reveal">
+    <span class="sec-num">06</span>
+    <div>
+      <h2>Aplicaciones clínicas en bioingeniería</h2>
+      <p>Cada aplicación existe gracias a una propiedad química concreta. Pasa el cursor o toca una tarjeta para verla.</p>
+    </div>
+  </header>
+  <div class="apps" id="apps"></div>
+
+  <article class="card reveal">
+    <h3>Entrecruzamiento químico: mejorar resistencia y frenar la degradación</h3>
+    <div class="tabs" id="xlTabs"></div>
+    <div class="xl-body" id="xlBody"></div>
+  </article>
+</section>
+
+<!-- ============ 7. VIABILIDAD ============ -->
+<section id="viabilidad" class="section">
+  <header class="sec-head reveal">
+    <span class="sec-num">07</span>
+    <div>
+      <h2>Ventajas, limitaciones y costos</h2>
+      <p>Un biomaterial no solo debe funcionar: debe ser seguro, reproducible y pagable.</p>
+    </div>
+  </header>
+  <div class="grid-2">
+    <article class="card reveal pros">
+      <h3>✓ Ventajas</h3>
+      <ul class="check">
+        <li><b>Biocompatible:</b> es la proteína estructural principal de la matriz extracelular humana.</li>
+        <li><b>Baja inmunogenicidad:</b> la triple hélice está muy conservada entre especies. Los epítopos están sobre todo en los telopéptidos, que pueden retirarse con pepsina (atelocolágeno).</li>
+        <li><b>Biodegradable:</b> las colagenasas (MMP) lo degradan y los productos se reabsorben.</li>
+        <li><b>Bioactivo:</b> tiene secuencias de adhesión celular (p. ej., GFOGER para integrinas) y activa plaquetas.</li>
+        <li><b>Procesable:</b> se moldea como esponja, gel, membrana, fibra o recubrimiento.</li>
+      </ul>
+    </article>
+    <article class="card reveal cons">
+      <h3>✕ Limitaciones</h3>
+      <ul class="cross-list">
+        <li><b>Baja resistencia mecánica</b> una vez reconstituido: pierde la jerarquía nativa.</li>
+        <li><b>Degradación rápida</b> in vivo si no se entrecruza.</li>
+        <li><b>Variabilidad entre lotes</b>: depende del animal, el tejido y la extracción.</li>
+        <li><b>Riesgo sanitario de la fuente animal</b>: priones (EEB), zoonosis, alergias. Una fracción pequeña de pacientes reacciona al colágeno bovino.</li>
+        <li><b>Desnaturalización térmica</b> cerca de la temperatura corporal: se convierte en gelatina.</li>
+      </ul>
+    </article>
+  </div>
+
+  <article class="card reveal">
+    <h3>Comparación de fuentes de colágeno</h3>
+    <div class="table-scroll">
+      <table class="tbl sources" id="sourcesTbl"></table>
+    </div>
+    <p class="muted small">Costo expresado en <b>orden de magnitud relativo</b>. Los precios cambian según proveedor, pureza y grado médico. Para el informe, completen esta columna con un valor citado (p. ej., catálogo de proveedor o Shoseyov et al., 2014, para el recombinante).</p>
+  </article>
+
+  <article class="card reveal chain">
+    <h3>El hilo del trabajo: estructura → desempeño → viabilidad</h3>
+    <div class="chain-row">
+      <div class="c-node chem"><b>Estructura química</b><span>Gly-X-Y · Hyp · puentes H · entrecruzamientos</span></div>
+      <div class="c-arrow">⟶</div>
+      <div class="c-node perf"><b>Desempeño</b><span>Tm ≈ 37–42 °C · σ ≈ 50–150 MPa · degradación por MMP</span></div>
+      <div class="c-arrow">⟶</div>
+      <div class="c-node viab"><b>Viabilidad</b><span>Requiere entrecruzar · fuente segura · costo vs. consistencia</span></div>
+    </div>
+  </article>
+</section>
+
+<!-- ============ 8. QUIZ ============ -->
+<section id="quiz" class="section">
+  <header class="sec-head reveal">
+    <span class="sec-num">08</span>
+    <div>
+      <h2>Ponte a prueba</h2>
+      <p>Autoevaluación rápida. Cada respuesta trae su explicación química.</p>
+    </div>
+  </header>
+  <article class="card reveal quiz">
+    <div class="q-progress"><div id="qBar"></div></div>
+    <div id="quizBox"></div>
+  </article>
+</section>
+
+<!-- ============ 9. REFERENCIAS ============ -->
+<section id="referencias" class="section">
+  <header class="sec-head reveal">
+    <span class="sec-num">09</span>
+    <div>
+      <h2>Referencias</h2>
+      <p>Formato APA 7. Toda afirmación técnica de esta app proviene de estas fuentes.</p>
+    </div>
+  </header>
+  <article class="card reveal">
+    <ol class="refs" id="refs"></ol>
+  </article>
+</section>
+</main>
+
+<footer class="foot">
+  <p><b>El colágeno como biomaterial:</b> relación entre su estructura química, su resistencia mecánica y su viabilidad de implementación clínica.</p>
+  <p>Trabajo final de Química Orgánica · Desarrollado por Hilary Suárez Fonseca · 2026</p>
+  <p class="muted small">Estructuras: RCSB Protein Data Bank · Visualización: 3Dmol.js</p>
+</footer>
+
+<script src="js/molecules.js"></script>
+<script src="js/helix.js"></script>
+<script src="js/content.js"></script>
+<script src="js/app.js"></script>
+<script src="js/sim.js"></script>
+<script src="js/viewer.js"></script>
+</body>
+</html>
